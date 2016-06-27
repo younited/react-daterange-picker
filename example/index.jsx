@@ -13,8 +13,9 @@ import GithubRibbon from './components/github-ribbon';
 import CodeSnippet from './components/code-snippet';
 import Install from './components/install';
 import Features from './components/features';
+import QuickSelection from './components/quick-selection';
 
-
+const today = moment();
 // freeze date to April 1st
 timekeeper.freeze(new Date('2015-04-01'));
 
@@ -23,7 +24,6 @@ function processCodeSnippet(src) {
   lines.splice(0, 3);
   return lines.join('\n');
 }
-
 
 const DatePickerRange = React.createClass({
   propTypes: {
@@ -89,6 +89,91 @@ const DatePickerSingle = React.createClass({
   },
 });
 
+const DatePickerSingleWithSetDateButtons = React.createClass({
+  getInitialState() {
+    return {
+      value: null,
+    };
+  },
+
+  handleSelect(value) {
+    this.setState({ value });
+  },
+
+  setDate(value) {
+    this.setState({ value });
+  },
+
+  render() {
+    const dateRanges = {
+      'Today': today,
+      'Next Month': today.clone().add(1, 'month'),
+      'Last Month': today.clone().subtract(1, 'month'),
+
+      'Next Year': today.clone().add(1, 'year'),
+      'Last Year': today.clone().subtract(1, 'year'),
+    };
+
+    return (
+      <div className="singleDateRange">
+        <RangePicker {...this.props} onSelect={this.handleSelect} value={this.state.value} />
+        <QuickSelection dates={dateRanges} value={this.state.value} onSelect={this.setDate} />
+        <div>
+          <input type="text"
+            value={this.state.value ? this.state.value.format('LL') : null}
+            readOnly={true} />
+        </div>
+      </div>
+    );
+  },
+});
+
+const DatePickerRangeWithSetRangeButtons = React.createClass({
+  getInitialState() {
+    return {
+      value: null,
+      states: null,
+    };
+  },
+
+  handleSelect(value, states) {
+    this.setState({ value, states });
+  },
+
+  setRange(value){
+    this.setState({ value });
+  },
+
+  render() {
+    const dateRanges = {
+      'Last 7 days': moment.range(
+        today.clone().subtract(7, 'days'),
+        today.clone()
+      ),
+      'This Year': moment.range(
+        today.clone().startOf('year'),
+        today.clone()
+      ),
+    };
+
+    return (
+      <div className="rangeDateContainer">
+        <QuickSelection dates={dateRanges} value={this.state.value} onSelect={this.setRange} />
+        <RangePicker {...this.props} onSelect={this.handleSelect} value={this.state.value} />
+        <div>
+          <input type="text"
+            value={this.state.value ? this.state.value.start.format('LL') : null}
+            readOnly={true}
+            placeholder="Start date"/>
+          <input type="text"
+            value={this.state.value ? this.state.value.end.format('LL') : null}
+            readOnly={true}
+            placeholder="End date" />
+        </div>
+      </div>
+    );
+  },
+});
 
 var mainCodeSnippet = fs.readFileSync(__dirname + '/code-snippets/main.jsx', 'utf8');
 
@@ -97,7 +182,6 @@ const Index = React.createClass({
   getDefaultProps() {
     return {};
   },
-
   render() {
     const stateDefinitions = {
       available: {
@@ -189,9 +273,24 @@ const Index = React.createClass({
                 selectionType="single"
                 minimumDate={new Date()} />
             </div>
+
+            <div className="example">
+              <h4>Setting Calendar Externally</h4>
+              <DatePickerSingleWithSetDateButtons
+                numberOfCalendars={1}
+                selectionType="single"
+                />
+            </div>
+
+            <div className="example">
+              <h4>Setting Calendar Range Externally</h4>
+              <DatePickerRangeWithSetRangeButtons
+                numberOfCalendars={2}
+                selectionType="range"
+                />
+            </div>
           </div>
         </div>
-
         <Footer />
       </main>
     );
