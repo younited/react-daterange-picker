@@ -28,7 +28,6 @@
       "email": "dwilkins@nuvi.com"
     }
   ],
-  "private": true,
   "license": "Apache-2.0",
   "main": "lib/DateRangePicker.js",
   "keywords": [
