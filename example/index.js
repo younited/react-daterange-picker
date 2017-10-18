@@ -1,6 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import {} from 'moment-range';
 var fs = require('fs');
@@ -27,7 +28,7 @@ function processCodeSnippet(src) {
 
 const DatePickerRange = React.createClass({
   propTypes: {
-    value: React.PropTypes.object,
+    value: PropTypes.object,
   },
 
   getInitialState() {

@@ -1,8 +1,8 @@
 {
   "name": "nuvi-daterange-picker",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A React based date range picker forked",
-  "author": "Dennis Wilkins dennis@nuvi.com",
+  "author": "Nuvi <developers@nuvi.com> (http://www.nuvi.com)",
   "scripts": {
     "prepare": "npm run build",
     "test": "npm run lint && npm run karma",
@@ -22,13 +22,7 @@
   "engines": {
     "node": ">=4.0"
   },
-  "contributors": [
-    {
-      "name": "Dennis Wilkins",
-      "email": "dwilkins@nuvi.com"
-    }
-  ],
-  "license": "Apache-2.0",
+  "license": "ISC",
   "main": "lib/DateRangePicker.js",
   "keywords": [
     "react",
@@ -52,6 +46,7 @@
     "immutable": "^3.8.0",
     "moment": "~2.15.2",
     "moment-range": "3.0.3",
+    "prop-types": "^15.5.10",
     "react-addons-pure-render-mixin": "^15.2.1"
   },
   "devDependencies": {
