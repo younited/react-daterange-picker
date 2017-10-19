@@ -1,10 +1,10 @@
 import React from 'react';
+import shallowCompare from 'react-addons-shallow-compare';
 import PropTypes from 'prop-types';
 import Immutable from 'immutable';
 
 import BemMixin from '../utils/BemMixin';
 import CustomPropTypes from '../utils/CustomPropTypes';
-import PureRenderMixin from '../utils/PureRenderMixin';
 import lightenDarkenColor from '../utils/lightenDarkenColor';
 
 import CalendarDatePeriod from './CalendarDatePeriod';
@@ -12,10 +12,8 @@ import CalendarHighlight from './CalendarHighlight';
 import CalendarSelection from './CalendarSelection';
 
 
-const CalendarDate = React.createClass({
-  mixins: [BemMixin, PureRenderMixin],
-
-  propTypes: {
+class CalendarDate extends BemMixin {
+  static propTypes = {
     date: CustomPropTypes.moment,
 
     firstOfMonth: PropTypes.object.isRequired,
@@ -39,21 +37,23 @@ const CalendarDate = React.createClass({
     onHighlightDate: PropTypes.func,
     onUnHighlightDate: PropTypes.func,
     onSelectDate: PropTypes.func,
-  },
+  };
 
-  getInitialState() {
-    return {
-      mouseDown: false,
-    };
-  },
+  state = {
+    mouseDown: false,
+  };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
 
   componentWillUnmount() {
     this.isUnmounted = true;
     document.removeEventListener('mouseup', this.mouseUp);
     document.removeEventListener('touchend', this.touchEnd);
-  },
+  }
 
-  mouseUp() {
+  mouseUp = () => {
     this.props.onSelectDate(this.props.date);
 
     if (this.isUnmounted) {
@@ -67,17 +67,17 @@ const CalendarDate = React.createClass({
     }
 
     document.removeEventListener('mouseup', this.mouseUp);
-  },
+  };
 
-  mouseDown() {
+  mouseDown = () => {
     this.setState({
       mouseDown: true,
     });
 
     document.addEventListener('mouseup', this.mouseUp);
-  },
+  };
 
-  touchEnd() {
+  touchEnd = () => {
     this.props.onHighlightDate(this.props.date);
     this.props.onSelectDate(this.props.date);
 
@@ -91,21 +91,21 @@ const CalendarDate = React.createClass({
       });
     }
     document.removeEventListener('touchend', this.touchEnd);
-  },
+  };
 
-  touchStart(event) {
+  touchStart = (event) => {
     event.preventDefault();
     this.setState({
       mouseDown: true,
     });
     document.addEventListener('touchend', this.touchEnd);
-  },
+  };
 
-  mouseEnter() {
+  mouseEnter = () => {
     this.props.onHighlightDate(this.props.date);
-  },
+  };
 
-  mouseLeave() {
+  mouseLeave = () => {
     if (this.state.mouseDown) {
       this.props.onSelectDate(this.props.date);
 
@@ -114,9 +114,9 @@ const CalendarDate = React.createClass({
       });
     }
     this.props.onUnHighlightDate(this.props.date);
-  },
+  };
 
-  getBemModifiers() {
+  getBemModifiers = () => {
     let {date, firstOfMonth, isToday: today} = this.props;
 
     let otherMonth = false;
@@ -131,9 +131,9 @@ const CalendarDate = React.createClass({
     }
 
     return {today, weekend, otherMonth};
-  },
+  };
 
-  getBemStates() {
+  getBemStates = () => {
     let {
       isSelectedDate,
       isInSelectedRange,
@@ -145,7 +145,7 @@ const CalendarDate = React.createClass({
     let selected = isSelectedDate || isInSelectedRange || isInHighlightedRange;
 
     return {disabled, highlighted, selected};
-  },
+  };
 
   render() {
     let {
@@ -237,7 +237,7 @@ const CalendarDate = React.createClass({
         {highlightModifier ? <CalendarHighlight modifier={highlightModifier} /> : null}
       </td>
     );
-  },
-});
+  }
+}
 
 export default CalendarDate;

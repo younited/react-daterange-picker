@@ -2,28 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import bemCx from './bemCx';
 
-const BemMixin = {
-  propTypes: {
+class BemMixin extends React.Component {
+  static propTypes = {
     bemNamespace: PropTypes.string,
     bemBlock: PropTypes.string,
-  },
+  };
 
-  contextTypes: {
+  static contextTypes = {
     bemNamespace: PropTypes.string,
     bemBlock: PropTypes.string,
-  },
+  };
 
-  childContextTypes: {
+  static childContextTypes = {
     bemNamespace: PropTypes.string,
     bemBlock: PropTypes.string,
-  },
+  };
 
   getChildContext() {
     return {
       bemNamespace: this.getBemNamespace(),
       bemBlock: this.getBemBlock(),
     };
-  },
+  }
 
   getBemNamespace() {
     if (this.props.bemNamespace) {
@@ -33,7 +33,7 @@ const BemMixin = {
       return this.context.bemNamespace;
     }
     return null;
-  },
+  }
 
   getBemBlock() {
     if (this.props.bemBlock) {
@@ -43,18 +43,18 @@ const BemMixin = {
       return this.context.bemBlock;
     }
     return null;
-  },
+  }
 
   cx(options = {}) {
     let opts = {
       namespace: this.getBemNamespace(),
-      element: this.constructor.displayName,
+      element: this.constructor.name,
       block: this.getBemBlock(),
     };
 
     Object.assign(opts, options);
     return bemCx(opts);
-  },
-};
+  }
+}
 
 export default BemMixin;

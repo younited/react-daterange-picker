@@ -1,15 +1,18 @@
 import React from 'react';
+import shallowCompare from 'react-addons-shallow-compare';
 import PropTypes from 'prop-types';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+
 import BemMixin from './utils/BemMixin';
 
-const Legend = React.createClass({
-  mixins: [BemMixin, PureRenderMixin],
-
-  propTypes: {
+class Legend extends BemMixin {
+  static propTypes = {
     selectedLabel: PropTypes.string.isRequired,
     stateDefinitions: PropTypes.object.isRequired,
-  },
+  };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
 
   render() {
     let {selectedLabel, stateDefinitions} = this.props;
@@ -42,7 +45,7 @@ const Legend = React.createClass({
         {items}
       </ul>
     );
-  },
-});
+  }
+}
 
 export default Legend;

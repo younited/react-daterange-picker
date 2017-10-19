@@ -1,16 +1,18 @@
 import React from 'react';
+import shallowCompare from 'react-addons-shallow-compare';
 import PropTypes from 'prop-types';
 
 import BemMixin from '../utils/BemMixin';
-import PureRenderMixin from '../utils/PureRenderMixin';
 
-const CalendarDatePeriod = React.createClass({
-  mixins: [BemMixin, PureRenderMixin],
-
-  propTypes: {
+class CalendarDatePeriod extends BemMixin {
+  static propTypes = {
     color: PropTypes.string,
     period: PropTypes.string,
-  },
+  };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
 
   render() {
     let {color, period} = this.props;
@@ -24,7 +26,7 @@ const CalendarDatePeriod = React.createClass({
     return (
       <div style={style} className={this.cx({modifiers})} />
     );
-  },
-});
+  }
+}
 
 export default CalendarDatePeriod;
