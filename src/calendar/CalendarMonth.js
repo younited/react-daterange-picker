@@ -13,6 +13,8 @@ import isMomentRange from '../utils/isMomentRange';
 const moment = extendMoment(Moment);
 
 class CalendarMonth extends BemMixin {
+  static displayName = 'CalendarMonth';
+
   static propTypes = {
     dateComponent: PropTypes.func,
     disableNavigation: PropTypes.bool,

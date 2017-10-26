@@ -48,7 +48,7 @@ class BemMixin extends React.Component {
   cx(options = {}) {
     let opts = {
       namespace: this.getBemNamespace(),
-      element: this.constructor.name,
+      element: this.constructor.displayName,
       block: this.getBemBlock(),
     };
 

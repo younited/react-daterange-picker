@@ -13,6 +13,8 @@ import CalendarSelection from './CalendarSelection';
 
 
 class CalendarDate extends BemMixin {
+  static displayName = 'CalendarDate';
+
   static propTypes = {
     date: CustomPropTypes.moment,
 

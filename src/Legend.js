@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import BemMixin from './utils/BemMixin';
 
 class Legend extends BemMixin {
+  static displayName = 'Legend';
+
   static propTypes = {
     selectedLabel: PropTypes.string.isRequired,
     stateDefinitions: PropTypes.object.isRequired,
