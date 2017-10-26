@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import BemMixin from '../utils/BemMixin';
 
 class CalendarDatePeriod extends BemMixin {
+  static displayName = 'CalendarDatePeriod';
+
   static propTypes = {
     color: PropTypes.string,
     period: PropTypes.string,

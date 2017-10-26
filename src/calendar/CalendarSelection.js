@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import BemMixin from '../utils/BemMixin';
 
 class CalendarSelection extends BemMixin {
+  static displayName = 'CalendarSelection';
+
   static propTypes = {
     modifier: PropTypes.string,
     pending: PropTypes.bool.isRequired,

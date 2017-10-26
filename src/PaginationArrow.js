@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import BemMixin from './utils/BemMixin';
 
 class PaginationArrow extends BemMixin {
+  static displayName = 'PaginationArrow';
+
   static propTypes = {
     disabled: PropTypes.bool,
     onTrigger: PropTypes.func,
