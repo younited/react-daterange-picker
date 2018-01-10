@@ -134,7 +134,7 @@ class CalendarMonth extends BemMixin {
   renderHeaderYear = () => {
     let {firstOfMonth} = this.props;
     let y = firstOfMonth.year();
-    let years = Immutable.Range(y - 5, y).concat(Immutable.Range(y, y + 10));
+    let years = Immutable.Range(y - 50, y).concat(Immutable.Range(y, y + 50));
     let choices = years.map(this.renderYearChoice);
     let modifiers = {year: true};
     return (
