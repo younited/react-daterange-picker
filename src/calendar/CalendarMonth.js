@@ -8,7 +8,7 @@ import Immutable from 'immutable';
 import BemMixin from '../utils/BemMixin';
 import CustomPropTypes from '../utils/CustomPropTypes';
 import isMomentRange from '../utils/isMomentRange';
-import datesInMonthFrom from '../utils/datesInMonthFrom';
+import datesInVisualMonth from '../utils/datesInVisualMonth';
 
 const moment = extendMoment(Moment);
 
@@ -191,7 +191,7 @@ class CalendarMonth extends BemMixin {
   render() {
     let {firstOfWeek, firstOfMonth} = this.props;
 
-    let monthDates = Immutable.fromJS(datesInMonthFrom(firstOfWeek, firstOfMonth.year(), firstOfMonth.month()));
+    let monthDates = Immutable.fromJS(datesInVisualMonth({firstDayOfWeek: firstOfWeek, year: firstOfMonth.year(), month: firstOfMonth.month()}));
     let weeks = monthDates.map(this.renderWeek);
 
     return (
