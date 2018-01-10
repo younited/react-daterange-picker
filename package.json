@@ -41,7 +41,6 @@
     "react-dom": "^15.3.2||^16"
   },
   "dependencies": {
-    "calendar": "^0.1.0",
     "classnames": "^2.2.3",
     "immutable": "^3.8.0",
     "moment": "~2.15.2",

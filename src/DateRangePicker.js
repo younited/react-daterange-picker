@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 import Immutable from 'immutable';
-import calendar from 'calendar';
 
 import BemMixin from './utils/BemMixin';
 import CustomPropTypes from './utils/CustomPropTypes';
@@ -18,6 +17,7 @@ import PaginationArrow from './PaginationArrow';
 import isMomentRange from './utils/isMomentRange';
 import hasUpdatedValue from './utils/hasUpdatedValue';
 import { getYearMonth, getYearMonthProps } from './utils/getYearMonth';
+import datesInMonthFrom from './utils/datesInMonthFrom';
 
 const moment = extendMoment(Moment);
 
@@ -477,8 +477,7 @@ class DateRangePicker extends BemMixin {
 
     monthDate.add(index, 'months');
 
-    let cal = new calendar.Calendar(firstOfWeek);
-    let monthDates = Immutable.fromJS(cal.monthDates(monthDate.year(), monthDate.month()));
+    let monthDates = Immutable.fromJS(datesInMonthFrom(firstOfWeek, monthDate.year(), monthDate.month()));
     let monthStart = monthDates.first().first();
     let monthEnd = monthDates.last().last();
     let monthRange = moment.range(monthStart, monthEnd);

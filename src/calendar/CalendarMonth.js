@@ -3,12 +3,12 @@ import shallowCompare from 'react-addons-shallow-compare';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
-import calendar from 'calendar';
 import Immutable from 'immutable';
 
 import BemMixin from '../utils/BemMixin';
 import CustomPropTypes from '../utils/CustomPropTypes';
 import isMomentRange from '../utils/isMomentRange';
+import datesInMonthFrom from '../utils/datesInMonthFrom';
 
 const moment = extendMoment(Moment);
 
@@ -191,8 +191,7 @@ class CalendarMonth extends BemMixin {
   render() {
     let {firstOfWeek, firstOfMonth} = this.props;
 
-    let cal = new calendar.Calendar(firstOfWeek);
-    let monthDates = Immutable.fromJS(cal.monthDates(firstOfMonth.year(), firstOfMonth.month()));
+    let monthDates = Immutable.fromJS(datesInMonthFrom(firstOfWeek, firstOfMonth.year(), firstOfMonth.month()));
     let weeks = monthDates.map(this.renderWeek);
 
     return (
